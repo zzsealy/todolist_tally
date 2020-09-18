@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %} Todo List {% endblock %}
+</head>
+<body>
+    {% block body %}
+    <h2>Add new todo</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="formGroupExampleInput">标题</label>
+            <input type="text" name="title" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">内容</label>
+            <input type="text" name="content" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">{{ form.prepare_finish_time.label }}</label>
+            {{ form.prepare_finish_time }}
+        </div>
+        <input type="submit" value="Add"/>
+    </form>
+
+
+    {% for todo in todo_list %}
+        {{ todo }}
+    {% endfor %}
+    {% endblock %}
+</body>
+</html>

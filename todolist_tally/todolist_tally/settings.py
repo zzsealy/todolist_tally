@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)), x)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -37,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'todolist_tally.apps.account'
+    'todolist_tally.apps.account',
+    'todolist_tally.apps.todo_list'
 ]
 
 MIDDLEWARE = [
@@ -55,7 +60,9 @@ ROOT_URLCONF = 'todolist_tally.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            location('templates')
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +76,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'todolist_tally.wsgi.application'
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'account.User'
+
+
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -99,6 +108,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = location('site_static')
+STATICFILES_DIRS = (
+    location('static'),
+)
 
 
 # Internationalization
