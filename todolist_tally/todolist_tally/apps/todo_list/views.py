@@ -9,7 +9,8 @@ def index(request):
         content = request.POST.get('content')
         prepare_finish_time = request.POST.get('prepare_finish_time')
         # prepare_finish_time = date
-        # Todo.create(title=title, content=content, prepare_finish_time=prepare_finish_time)
+        one_todo = Todo(title=title, content=content, prepare_finish_time=prepare_finish_time)
+        one_todo.save()
     todo_list = list(Todo.objects.all())
     form = TodoForm()
     context_dict = {'todo_list': todo_list, 'form':form}
