@@ -3,5 +3,6 @@ from todolist_tally.apps.todo_list import views
 
 urlpatterns = [
     # 登陆url
-    path('', views.index)
+    path('', views.index),
+    path('finish-<int:id>/', views.Finish_todo.as_view(), name ='finish-todo')
 ]

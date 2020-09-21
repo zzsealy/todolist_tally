@@ -3,33 +3,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    {% block title %} Todo List {% endblock %}
+    {% block title %} 待办事项总览 {% endblock %}
 </head>
 <br>
-    {% block body %}
-    <h2>Add new todo</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="formGroupExampleInput">标题</label>
-            <input type="text" name="title" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="formGroupExampleInput">内容</label>
-            <input type="text" name="content" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="formGroupExampleInput">{{ form.prepare_finish_time.label }}</label>
-            {{ form.prepare_finish_time }}
-        </div>
-        <input type="submit" value="Add"/>
-    </form>
 
-
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>添加事项</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">标题</label>
+                        <input type="text" name="title" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">内容</label>
+                        <input type="text" name="content" class="form-control">
+                    </div>
+                    <div id="sandbox-container">
+                        <label for="formGroupExampleInput">{{ form.prepare_finish_time.label }}</label>
+                        {{ form.prepare_finish_time }}
+                    </div>
+                    <input type="submit" value="Add"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
     {% for todo in todo_list %}
-        title {{ todo.title }} </br>
-        content {{ todo.content }}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div style="border: solid; border-style: inset; border-color: #f2dede">
+                        <h4 style="white-space: nowrap; color: coral">{{ todo.title }}</h4>
+                        <h3 style="color: turquoise">{{ todo.content }}</h3>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <button id="change-{{ todo.id }}" onclick="" class="btn btn-warning">修改</button>
+                    <button id="finish-{{ todo.id }}" onclick="finish_todo({{ todo.id }})" class="btn btn-success">完成
+                    </button>
+                </div>
+            </div>
+        </div>
     {% endfor %}
-    {% endblock %}
+
+
+{% endblock %}
+{% block js %}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+          integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+            integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+        function finish_todo(id) {
+            var allurl = "http://127.0.0.1:8000/finish-" + id
+            $.ajax({
+                //请求方式
+                type: 'POST',
+                url: allurl,
+                data: id,
+                success: function (result) {
+                    console.log('success', result)
+                },
+                error: function (result) {
+                    console.log('error', result)
+                },
+            })
+        }
+
+    </script>
+{% endblock %}
 </body>
 </html>
