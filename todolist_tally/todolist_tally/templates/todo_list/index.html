@@ -8,48 +8,41 @@
 <br>
 
 {% block content %}
+    <nav class=" black navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <h3 style="margin-top: 10px">待办事项</h3>
+        </div>
+    </nav>
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <h2>添加事项</h2>
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="formGroupExampleInput">标题</label>
-                        <input type="text" name="title" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput">内容</label>
-                        <input type="text" name="content" class="form-control">
-                    </div>
-                    <div id="sandbox-container">
-                        <label for="formGroupExampleInput">{{ form.prepare_finish_time.label }}</label>
-                        {{ form.prepare_finish_time }}
-                    </div>
-                    <input type="submit" value="Add"/>
-                </form>
+            <div class="col-md-6 col-md-offset-2">
+                <div style="margin-top: 100px">
+                    <form  method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" name="content" placeholder="你需要完成什么事项" class="form-control">
+                        </div>
+                        <div id="sandbox-container">
+                            <input type="text" name="time" placeholder="预计完成时间">
+                        </div>
+                        <input class="btn btn-default" type="submit" value="添加">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     <br>
-    {% for todo in todo_list %}
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div style="border: solid; border-style: inset; border-color: #f2dede">
-                        <h4 style="white-space: nowrap; color: coral">{{ todo.title }}</h4>
-                        <h3 style="color: turquoise">{{ todo.content }}</h3>
-                    </div>
 
-                </div>
-                <div class="col-md-3">
-                    <button id="change-{{ todo.id }}" onclick="" class="btn btn-warning">修改</button>
-                    <button id="finish-{{ todo.id }}" onclick="finish_todo({{ todo.id }})" class="btn btn-success">完成
-                    </button>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-2">
+                {% for todo in todo_list %}
+                    {% include 'todo_list/_item.html' %}
+                {% endfor %}
             </div>
         </div>
-    {% endfor %}
+    </div>
+
 
 
 {% endblock %}
