@@ -1,0 +1,18 @@
+<div class="row item card-panel hoverable"
+     data-id="{{ todo.id }}" data-body="{{ todo.content }}">
+    <span class="item-body">
+        <a class="button done-btn">
+            <i class="material-icons left">{% if todo.done %}check_box{% else %}check_box_outline_blank{% endif %}</i>
+        </a>
+        <span class="{% if todo.done %}inactive-item{% else %}active-item{% endif %}"
+              id="body{{ todo.id }}">{{ todo.content }}</span>
+         </span>
+    <span class="hide edit-btns right">
+        <a class="right button delete-btn">
+            <i class="material-icons small-icon left">删除</i>
+        </a>
+        <a class="right button edit-btn">
+            <i class="material-icons small-icon left">编辑mode</i>
+        </a>
+    </span>
+</div>

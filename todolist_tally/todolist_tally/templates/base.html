@@ -9,6 +9,7 @@
     <title>{% block title %} {% endblock title %}</title>
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/materialize.css'%}" rel='stylesheet'>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     {% block content %}
@@ -16,6 +17,7 @@
 
     <srcipt src="{% static 'js/bootstrap.js' %}"></srcipt>
     <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/materialize.min.js'%}"></script>
     {% block js %} {% endblock js %}
 </body>
 </html>
