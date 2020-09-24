@@ -47,28 +47,7 @@
 
 {% endblock %}
 {% block js %}
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
-          integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
-            integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
     <script type="text/javascript">
-
-        function finish_todo(id) {
-            var allurl = "http://127.0.0.1:8000/finish-" + id
-            $.ajax({
-                //请求方式
-                type: 'POST',
-                url: allurl,
-                data: id,
-                success: function (result) {
-                    console.log('success', result)
-                },
-                error: function (result) {
-                    console.log('error', result)
-                },
-            })
-        }
 
     </script>
 {% endblock %}

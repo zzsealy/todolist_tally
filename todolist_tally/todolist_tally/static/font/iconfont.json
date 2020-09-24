@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4425819",
+      "name": "选择-方框",
+      "font_class": "xuanze-fangkuang",
+      "unicode": "e793",
+      "unicode_decimal": 59283
+    },
+    {
+      "icon_id": "13954060",
+      "name": "方框",
+      "font_class": "fangkuang",
+      "unicode": "e563",
+      "unicode_decimal": 58723
+    }
+  ]
+}

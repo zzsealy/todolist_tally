@@ -3,7 +3,10 @@ from django.shortcuts import render
 from todolist_tally.apps.todo_list.form import TodoForm
 from todolist_tally.apps.todo_list.models import Todo
 from django.views.generic import View
-from django.http import response
+from django.http import response, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
 
 
 def index(request):
@@ -27,10 +30,14 @@ class Edit_todo(View):
         return response(status=500)
 
 
-class Finish_todo(View):
+@csrf_exempt
+def toggle_todo(request, **kwargs):
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        id = body['id']
+        todo = Todo.objects.get(id = id)
+        todo.done = not todo.done # 取反
+        todo.save()
+        return JsonResponse(data={'success':'ok'})
 
-    def get(self, request, id):
-        print("hello world!")
 
-    def post(self, request):
-        return 'oooo'
