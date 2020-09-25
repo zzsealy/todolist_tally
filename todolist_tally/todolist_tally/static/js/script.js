@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $('.tooltipped').tooltip({delay: 50});
     $('.card-panel').each(function () {
         $(this).mouseover(function () {
             // debugger;
@@ -9,42 +10,41 @@ $(document).ready(function () {
         })
     })
 
-
-
 })
 
-function edit_todo(e) {
+function toggle_todo(e) {
     var $t = $(e);
     var url = $t.data('href')
     var id = $t.data('id')
     $.ajax({
         url: url,
         type: 'POST',
+        async: false,
         data: JSON.stringify({'id': id}),
         contentType: 'application/json;charset=UTF-8',
-        success: function (){
-
+        success: function (data){
+            msg = data['msg'];
+            M.toast({html:msg }, 2000);  // Materialize 提示
         },
         complete: function () {
             $('#todo-card' + id).load("http://127.0.0.1:8000/" + " .todo-body" + id);
         }
     })
-    var done = $('.todo-body' + id).data('done');
-            if (done==='True'){
-                $('#text' + id).addClass("active-item");
-
-            } else {
-                $('#text' + id).addClass("inactive-item");
-            }
 }
 
-// function erase(id){
-//     body = document.getElementById(id);
-//     // <SPAN style="TEXT-DECORATION: line-through">Line-through</SPAN>
-//     $todo_span = $(body)
-//     $todo_span.css({"text-decoration":"line-through"});
-//
-// }
+$(document).on('click', 'edit-btn', function(){
+    var $item = $(this).parent().parent();
+    var item_id = $item.data('.id');
+    var item_content = $('#text' + item_id).text();
+    $item.hide();
+    $item.after(' \
+                <div class="row card-panel hoverable">\
+                <input class="validate" id="edit-item-input" type="text" value="' + itemBody + '"\
+                autocomplete="off" autofocus required> \
+                </div> \
+            ');
+});
+
 
 
 

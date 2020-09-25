@@ -6,38 +6,42 @@ from django.views.generic import View
 from django.http import response, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+import time
+from todolist_tally.apps.todo_list.utils import format_time
 
 
 
 def index(request):
     if request.method == 'POST':
         content = request.POST.get('content')
-        one_todo = Todo(content=content)
+        prepare_finish_time = request.POST.get('time')
+        one_todo = Todo(content=content, prepare_finish_time=prepare_finish_time)
         one_todo.save()
     todo_list = Todo.objects.all()
     context_dict = {'todo_list': todo_list}
     return render(request, 'todo_list/index.html', context_dict)
 
 
-class Edit_todo(View):
-    form_class = TodoForm
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.save()
-            return response(status=200)
-        return response(status=500)
 
 
 @csrf_exempt
 def toggle_todo(request, **kwargs):
     if request.method == 'POST':
         body = json.loads(request.body)
+        today = time.strftime("%Y-%m-%d", time.localtime())  # 格式化用的
         id = body['id']
         todo = Todo.objects.get(id = id)
         todo.done = not todo.done # 取反
+        todo.finished_time = today
         todo.save()
-        return JsonResponse(data={'success':'ok'})
+        today = format_time(today)
+        prepare_finish_date = format_time(todo.prepare_finish_time)
+        if today > prepare_finish_date:
+            msg = "逾期完成！"
+        else:
+            msg = "按时完成"
+        if todo.done is False:
+            msg = "你取消了"
+        return JsonResponse(data={'msg':msg})
 
 

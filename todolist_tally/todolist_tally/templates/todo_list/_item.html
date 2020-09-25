@@ -1,17 +1,23 @@
-<div id="todo-card{{ todo.id }}" class="row item card-panel hoverable"
-     data-id="{{ todo.id }}" data-body="{{ todo.content }}" >
+<div id="todo-card{{ todo.id }}" data-id="{{ todo.id }}" class="row item card-panel hoverable"
+     data-id="{{ todo.id }}" data-body="{{ todo.content }}">
     <span class="todo-body{{ todo.id }}" data-done="{{ todo.done }}" >
-        <a onclick="edit_todo(this)" class="button done-btn"  data-href="{% url 'toggle_todo' %}" data-id="{{ todo.id }}">
+        <a onclick="toggle_todo(this)" class="button done-btn"  data-href="{% url 'toggle_todo' %}" data-id="{{ todo.id }}">
             {% if todo.done %}
             <i class="iconfont icon-xuanze-fangkuang"></i>
             {% else %}
             <i class="iconfont icon-fangkuang" ></i>
             {% endif %}
-        {% if todo.done %}true{% else %}false{% endif %}
+
         </a>
-        <span style="margin-left: 30px;"
+        {% if todo.done %}
+            <span  style="margin-left: 30px;" class="inactive-item"
               id="text{{ todo.id }}">{{ todo.content }}</span>
-    </span>
+        {% else %}
+            <span  style="margin-left: 30px;" class="active-item"
+              id="text{{ todo.id }}">{{ todo.content }}</span>
+        </span>
+        {% endif %}
+
     <span  style="display:none" id="change-todo-in-card" class="edit-btns right">
         <a class="right button delete-btn">
             <i class="material-icons small-icon left">删除</i>
