@@ -1,16 +1,16 @@
-<div id="todo-card" class="row item card-panel hoverable"
-     data-id="{{ todo.id }}" data-body="{{ todo.content }}" data-done="{{ todo.done }}" >
- {% csrf_token %}
-    <span class="item-body">
+<div id="todo-card{{ todo.id }}" class="row item card-panel hoverable"
+     data-id="{{ todo.id }}" data-body="{{ todo.content }}" >
+    <span class="todo-body{{ todo.id }}" data-done="{{ todo.done }}" >
         <a onclick="edit_todo(this)" class="button done-btn"  data-href="{% url 'toggle_todo' %}" data-id="{{ todo.id }}">
             {% if todo.done %}
             <i class="iconfont icon-xuanze-fangkuang"></i>
             {% else %}
             <i class="iconfont icon-fangkuang" ></i>
             {% endif %}
+        {% if todo.done %}true{% else %}false{% endif %}
         </a>
-        <span style="margin-left: 30px;" class="{% if todo.done %}inactive-item{% else %}active-item{% endif %}"
-              id="body{{ todo.id }}">{{ todo.content }}</span>
+        <span style="margin-left: 30px;"
+              id="text{{ todo.id }}">{{ todo.content }}</span>
     </span>
     <span  style="display:none" id="change-todo-in-card" class="edit-btns right">
         <a class="right button delete-btn">
