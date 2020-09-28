@@ -1,6 +1,6 @@
-<div id="todo-card{{ todo.id }}" data-id="{{ todo.id }}" class="row item card-panel hoverable"
-     data-id="{{ todo.id }}" data-body="{{ todo.content }}">
-    <span class="todo-body{{ todo.id }}" data-done="{{ todo.done }}" >
+<div id="todo-card{{ todo.id }}"  class="row item card-panel hoverable"
+     data-id="{{ todo.id }}" data-body="{{ todo.content }}" data-href="{% url 'edit_todo' %}">
+    <span class="todo-body{{ todo.id }}" data-done="{{ todo.done }}"  >
         <a onclick="toggle_todo(this)" class="button done-btn"  data-href="{% url 'toggle_todo' %}" data-id="{{ todo.id }}">
             {% if todo.done %}
             <i class="iconfont icon-xuanze-fangkuang"></i>
@@ -10,10 +10,10 @@
 
         </a>
         {% if todo.done %}
-            <span  style="margin-left: 30px;" class="inactive-item"
+            <span style="margin-left: 30px;" class="inactive-item"
               id="text{{ todo.id }}">{{ todo.content }}</span>
         {% else %}
-            <span  style="margin-left: 30px;" class="active-item"
+            <span style="margin-left: 30px;" class="active-item"
               id="text{{ todo.id }}">{{ todo.content }}</span>
     
         {% endif %}

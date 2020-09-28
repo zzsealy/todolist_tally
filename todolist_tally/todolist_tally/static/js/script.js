@@ -22,28 +22,84 @@ function toggle_todo(e) {
         async: false,
         data: JSON.stringify({'id': id}),
         contentType: 'application/json;charset=UTF-8',
-        success: function (data){
+        success: function (data) {
             msg = data['msg'];
-            M.toast({html:msg }, 2000);  // Materialize 提示
+            M.toast({html: msg}, 2000);  // Materialize 提示
         },
         complete: function () {
-            $('#todo-card' + id).load("http://localhost:8000/" + " .todo-body" + id);
+            $('#todo-card' + id).load("http://127.0.0.1:8000/" + " .todo-body" + id);
         }
     })
 }
 
-$(document).on('click', '.edit-btn', function(){
+function edit_item(e) {
+    // 输入的时候编辑输入任何内容都会触发这个函数
+    var $edit_input = $('#edit-item-input');
+    var value = $edit_input.val().trim();
+    if (e.which !== 13 || !value) {
+        return;
+    }
+    $edit_input.val('');
+
+    if (!value) {
+        M.toast({html: "请输入内容！"});
+        return;
+    }
+    var url = $edit_input.parent().prev().data('href');
+    var id = $edit_input.parent().prev().data('id');
     debugger;
-    var $item = $(this).parent().parent();
-    var item_id = $item.data('.id');
+    $.ajax({
+        type: 'PUT',
+        url: url,
+        data: JSON.stringify({'id':id, 'content': value}),
+        contentType: 'application/json;charset=UTF-8',
+        success: function (data) {
+            $('#body' + id).html(value);
+            $edit_input.parent().prev().data('body', value);
+            remove_edit_input();
+            M.toast({html: data.msg});
+        },
+        complete: function () {
+            $('#todo-card' + id).load("http://127.0.0.1:8000/" + " .todo-body" + id);
+        }
+    })
+}
+
+// edit item
+$(document).on('keyup', '#edit-item-input', edit_item.bind(this));
+
+// 编辑没有修改内容返回页面状态显示todo
+function remove_edit_input() {
+    var $edit_input = $('#edit-item-input');
+    $edit_input.parent().prev().show();
+    $edit_input.parent().remove();
+};
+
+$(document).on('click', '.edit-btn', function () {
+    var $item = $(this).parent().parent().parent();
+    var item_id = $item.data('id');
     var item_content = $('#text' + item_id).text();
+    // debugger;
     $item.hide();
+    // 点击编辑变成输入框
     $item.after(' \
                 <div class="row card-panel hoverable">\
-                <input class="validate" id="edit-item-input" type="text" value="' + itemBody + '"\
+                <input class="validate" id="edit-item-input" type="text" value="' + item_content + '"\
                 autocomplete="off" autofocus required> \
                 </div> \
             ');
+    // 按键检测
+    var $edit_input = $('#edit-item-input');
+    $(document).on('keydown', function (e) {
+        if (e.keyCode === 27) {
+            remove_edit_input();
+        }
+    });
+
+    // 鼠标移开编辑
+    $edit_input.on('focusout', function(){
+            remove_edit_input();
+        })
 });
 
 

@@ -21,8 +21,17 @@ def index(request):
     context_dict = {'todo_list': todo_list}
     return render(request, 'todo_list/index.html', context_dict)
 
-
-
+@csrf_exempt
+def edit_todo(request):
+    if request.method == 'PUT':
+        body = json.loads(request.body)
+        id = body['id']
+        content = body['content']
+        todo = Todo.objects.get(id = id)
+        todo.content = content
+        todo.save()
+        msg = "修改成功"
+        return JsonResponse(data={'msg':msg})
 
 @csrf_exempt
 def toggle_todo(request, **kwargs):
