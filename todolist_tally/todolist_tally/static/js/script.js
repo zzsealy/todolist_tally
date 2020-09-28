@@ -27,12 +27,13 @@ function toggle_todo(e) {
             M.toast({html:msg }, 2000);  // Materialize 提示
         },
         complete: function () {
-            $('#todo-card' + id).load("http://127.0.0.1:8000/" + " .todo-body" + id);
+            $('#todo-card' + id).load("http://localhost:8000/" + " .todo-body" + id);
         }
     })
 }
 
-$(document).on('click', 'edit-btn', function(){
+$(document).on('click', '.edit-btn', function(){
+    debugger;
     var $item = $(this).parent().parent();
     var item_id = $item.data('.id');
     var item_content = $('#text' + item_id).text();
