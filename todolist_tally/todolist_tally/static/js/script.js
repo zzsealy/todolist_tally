@@ -9,7 +9,11 @@ $(document).ready(function () {
             $(this).find('#change-todo-in-card').css({'display': 'none'});
         })
     })
-
+    // 用户验证
+    error = $('.error').data('error');
+    if (error !== '') {
+        M.toast({html: error}, 2000);
+    }
 })
 
 function toggle_todo(e) {
@@ -47,7 +51,6 @@ function edit_item(e) {
     }
     var url = $edit_input.parent().prev().data('href');
     var id = $edit_input.parent().prev().data('id');
-    debugger;
     $.ajax({
         type: 'PUT',
         url: url,
@@ -60,7 +63,7 @@ function edit_item(e) {
             M.toast({html: data.msg});
         },
         complete: function () {
-            $('#todo-card' + id).load("http://127.0.0.1:8000/" + " .todo-body" + id);
+            $('#todo-card' + id).load("http://localhost:8000/" + " .todo-body" + id);
         }
     })
 }

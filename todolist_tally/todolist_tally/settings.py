@@ -78,7 +78,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'todolist_tally.wsgi.application'
 AUTH_USER_MODEL = 'account.User'
 
-
+LOGIN_URL = '/account/login' #  重定向登录
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

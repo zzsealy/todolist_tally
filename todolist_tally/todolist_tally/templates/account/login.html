@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <form action="/account/login" method="post" style="margin-top: 20%;">
+            {% csrf_token %}
+            <p class="error" data-error="{{ error }}" style="display: none"></p>
+            <div class="row">
+            <div class="input-field col s2 offset-s5">
+                <label for="id_username">用户名：</label>
+                <input type="text" name="username">
+            </div>
+            </div>
+            <div class="row">
+            <div class="input-field col s2 offset-s5">
+                <label for="id_password">密码：</label>
+                <input type="password" name="password">
+                <input class="waves-effect waves-light btn" type="submit" value="登录" style="margin-top: 10px">
+            </div>
+            </div>
+        </form>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+        alert("hello")
+        debugger;
+        error = $('.error').data('error');
+        M.toast({html: error}, 2000);
+</script>
+{% endblock %}

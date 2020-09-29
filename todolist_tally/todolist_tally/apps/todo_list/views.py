@@ -1,16 +1,16 @@
 from django.shortcuts import render
 # Create your views here.
-from todolist_tally.apps.todo_list.form import TodoForm
 from todolist_tally.apps.todo_list.models import Todo
-from django.views.generic import View
+# from django.views.generic import View
+# from django.contrib.auth.decorators import login_required
 from django.http import response, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import time
 from todolist_tally.apps.todo_list.utils import format_time
+from todolist_tally.apps.account.utils import my_decorator
 
-
-
+@my_decorator
 def index(request):
     if request.method == 'POST':
         content = request.POST.get('content')
