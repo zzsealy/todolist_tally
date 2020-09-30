@@ -54,16 +54,16 @@ function edit_item(e) {
     $.ajax({
         type: 'PUT',
         url: url,
-        data: JSON.stringify({'id':id, 'content': value}),
+        data: JSON.stringify({'id': id, 'content': value}),
         contentType: 'application/json;charset=UTF-8',
         success: function (data) {
             $('#body' + id).html(value);
             $edit_input.parent().prev().data('body', value);
             remove_edit_input();
-            M.toast({html: data.msg});
+            M.toast({html: data.msg},2000);
         },
         complete: function () {
-            $('#todo-card' + id).load("http://localhost:8000/" + " .todo-body" + id);
+            $('#todo-card' + id).load("http://127.0.0.1:8000/" + " .todo-body" + id);
         }
     })
 }
@@ -77,6 +77,25 @@ function remove_edit_input() {
     $edit_input.parent().prev().show();
     $edit_input.parent().remove();
 };
+
+function del_todo(e) {
+    debugger;
+    var url = $(e).data('href');
+    var $item = $(e).parent().parent().parent();
+    var id = $item.data('id');
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: JSON.stringify({'id': id}),
+        contentType: 'application/json;charset=UTF-8',
+        success: function (data) {
+            M.toast({html: data.msg}, 1000);
+        },
+        complete: function () {
+            setTimeout("window.location.reload()", 1000);
+        }
+    })
+}
 
 $(document).on('click', '.edit-btn', function () {
     var $item = $(this).parent().parent().parent();
@@ -100,9 +119,9 @@ $(document).on('click', '.edit-btn', function () {
     });
 
     // 鼠标移开编辑
-    $edit_input.on('focusout', function(){
-            remove_edit_input();
-        })
+    $edit_input.on('focusout', function () {
+        remove_edit_input();
+    })
 });
 
 

@@ -5,5 +5,6 @@ urlpatterns = [
     # 登陆url
     path('', views.index, name='index'),
     path('toggle-todo', views.toggle_todo, name='toggle_todo'),
-    path('edit-todo', views.edit_todo, name='edit_todo')
+    path('edit-todo', views.edit_todo, name='edit_todo'),
+    path('del-todo', views.del_todo, name='del_todo')
 ]

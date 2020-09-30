@@ -19,11 +19,11 @@
         {% endif %}
 
         <span  style="display:none" id="change-todo-in-card" class="edit-btns right">
-            <a class="right button delete-btn">
+            <a onclick="del_todo(this)" class="right button delete-btn" data-href="{% url 'del_todo' %}">
                 <i class="material-icons small-icon left">删除</i>
             </a>
             <a class="right button edit-btn">
-                <i class="material-icons small-icon left">编辑mode</i>
+                <i class="material-icons small-icon left">编辑m</i>
             </a>
         </span>
     </span>

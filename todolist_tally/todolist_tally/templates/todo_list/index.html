@@ -8,8 +8,11 @@
 <br>
 
 {% block content %}
-     <a class="btn" onclick="M.toast('I am a toast', 4000)">Toast!</a>
+    <a class="btn" onclick="M.toast('I am a toast', 4000)">Toast!</a>
     <nav class=" black navbar navbar-default navbar-fixed-top">
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="{% url 'login' %}">更换账号</a></li>
+        </ul>
         <div class="container">
             <h3 style="margin-top: 10px">待办事项</h3>
         </div>
@@ -18,7 +21,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-2">
                 <div style="margin-top: 100px">
-                    <form  method="post">
+                    <form method="post">
                         {% csrf_token %}
                         <div class="form-group">
                             <input type="text" name="content" placeholder="你需要完成什么事项" class="form-control">

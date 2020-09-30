@@ -3,3 +3,4 @@
 *.DS_Store
 *.pyc
 .vscode
+front-end/node_modules

@@ -53,4 +53,13 @@ def toggle_todo(request, **kwargs):
             msg = "你取消了"
         return JsonResponse(data={'msg':msg})
 
+@csrf_exempt
+def del_todo(request):
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        id = body['id']
+        todo = Todo.objects.get(id=id)
+        todo.delete()
+        return JsonResponse(data={'msg':"删除成功"})
+
 
