@@ -6,10 +6,10 @@ from todolist_tally.apps.expense.models import Expense
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email']
+        fields = ['username', 'url', 'email']
 
 
-class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
+class ExpenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expense
         fields = ['user', 'category', 'money']

@@ -16,11 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from todolist_tally.apps.expense.views import UserViewSet, ExpenseViewSet
+from todolist_tally.apps.expense.views import UserViewSet,ExpenseViewSet
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+
+
 
 router = routers.DefaultRouter()
 router.register('users', UserViewSet)
 router.register('expenses', ExpenseViewSet)
+
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -31,3 +37,4 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-expense/', include('rest_framework.urls', namespace='rest_framework')),
 ]
+
