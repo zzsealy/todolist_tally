@@ -14,29 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-# from todolist_tally.apps.account.models import User
-# from rest_framework import routers, serializers, viewsets
-#
-# # Serializers define the API representation.
-# class UserSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ['url', 'username', 'email', 'is_staff']
-#
-# # ViewSets define the view behavior.
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all()
-#     serializers_class = UserSerializer
-#
-# # Routers provide an easy way of automatically determining the URL conf.
-# router = routers.DefaultRouter()
-# router.register(r'users', UserViewSet())
+from django.urls import include, path
+from rest_framework import routers
+from todolist_tally.apps.expense.views import UserViewSet, ExpenseViewSet
 
+router = routers.DefaultRouter()
+router.register('users', UserViewSet)
+router.register('expenses', ExpenseViewSet)
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include('todolist_tally.apps.todo_list.urls')),
     path('account/', include('todolist_tally.apps.account.urls')),
     path('admin/', admin.site.urls),
-    # path('url/', include(router.urls)),
-    # path('api-expense/', include('rest_framework.urls'), namespace='rest_framework'),
+    path('api/', include(router.urls)),
+    path('api-expense/', include('rest_framework.urls', namespace='rest_framework')),
 ]

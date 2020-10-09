@@ -24,6 +24,7 @@ class LoginView(View): # 文档里说通用视图自动创建ModelForm,只要他
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
+
         if user:
             login(request, user)
             return redirect("index")
