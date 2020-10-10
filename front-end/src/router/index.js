@@ -14,7 +14,7 @@ export default new Router({
             component: Ping
         },
         {
-            path: '/a',
+            path: '/expense',
             name: 'expense',
             component: Expense,
         },

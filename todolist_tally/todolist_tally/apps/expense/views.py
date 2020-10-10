@@ -28,9 +28,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class ExpenseViewSet(viewsets.ModelViewSet):
     queryset = Expense.objects.all()
-    for ex in queryset:
-       ex['username'] = ex.user.username
-
     serializer_class = ExpenseSerializer
+
 
 
