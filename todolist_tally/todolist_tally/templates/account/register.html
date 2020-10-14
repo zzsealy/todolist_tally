@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="/account/register" method="post" style="margin-top: 20%;">
+    {% csrf_token %}
+    <p class="error" data-error="{{ error }}" style="display: none"></p>
+    <div class="row">
+        <div class="input-field col s2 offset-s5">
+            <label for="id_username">用户名：</label>
+            <input type="text" name="username">
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s2 offset-s5">
+            <label for="id_password">密码：</label>
+            <input type="password" name="password1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s2 offset-s5">
+            <label for="id_password">确认密码：</label>
+            <input type="password" name="password2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s2 offset-s5">
+            <label for="id_password">邮箱</label>
+            <input type="email" name="email">
+            <input class="waves-effect waves-light btn" type="submit" value="注册" style="margin-top: 10px">
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+
+

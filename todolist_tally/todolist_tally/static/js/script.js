@@ -10,6 +10,7 @@ $(document).ready(function () {
         })
     })
     // 用户验证
+    console.log("j进来了")
     error = $('.error').data('error');
     if (error !== '') {
         M.toast({html: error}, 2000);

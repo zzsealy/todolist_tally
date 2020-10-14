@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     {% block title %} 待办事项总览 {% endblock %}
@@ -8,52 +9,79 @@
 <br>
 
 {% block content %}
-    <a class="btn" onclick="M.toast('I am a toast', 4000)">Toast!</a>
-    <nav class=" black navbar navbar-default navbar-fixed-top">
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="{% url 'login' %}">更换账号</a></li>
-        </ul>
-        <div class="container">
-            <h3 style="margin-top: 10px">待办事项</h3>
-        </div>
-    </nav>
+<a class="btn" onclick="M.toast('I am a toast', 4000)">Toast!</a>
+<nav class=" black navbar navbar-default navbar-fixed-top">
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="{% url 'login' %}">更换账号</a></li>
+    </ul>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-2">
-                <div style="margin-top: 100px">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input type="text" name="content" placeholder="你需要完成什么事项" class="form-control">
-                        </div>
-                        <div id="sandbox-container">
-                            <input type="text" name="time" placeholder="预计完成时间">
-                        </div>
-                        <input class="btn btn-default" type="submit" value="添加">
-                    </form>
-                </div>
-            </div>
-        </div>
+        <h3 style="margin-top: 10px">待办事项</h3>
     </div>
-    <br>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2">
+            <div style="margin-top: 100px">
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-2">
-                {% for todo in todo_list %}
-                    {% include 'todo_list/_item.html' %}
-                {% endfor %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="content" placeholder="你需要完成什么事项" class="form-control">
+                    </div>
+                    <div id="sandbox-container">
+                        <input type="text" name="time" placeholder="预计完成时间">
+                    </div>
+                    <input class="btn btn-default" type="submit" value="添加">
+                </form>
             </div>
         </div>
     </div>
+</div>
+<br>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2">
+            <div>
+                <button onclick="filter_user('all')" class="chip">
+                    所有
+                </button>
+                <button onclick="filter_user('ll')" class="chip">
+                    小怪兽
+                </button>
+                <button onclick="filter_user('drq')" class="chip">
+                    代睿权
+                </button>
+            </div>
+            {% for todo in todo_list %}
+            {% include 'todo_list/_item.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
 
 
 {% endblock %}
 {% block js %}
-    <script type="text/javascript">
+<script type="text/javascript">
 
-    </script>
+    
+    function filter_user(userValue) {
+        
+        const url = "http://127.0.0.1:8000/filter-user"
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { csrfmiddlewaretoken: '{{ csrf_token }}', value: userValue },
+            success: function(data) {
+                console.log(data['msg']);
+            }
+        });
+    }
+</script>
 {% endblock %}
 </body>
+
 </html>
