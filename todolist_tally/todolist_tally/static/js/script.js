@@ -10,7 +10,7 @@ $(document).ready(function () {
         })
     })
     // 用户验证
-    console.log("j进来了")
+    console.log("进来了")
     error = $('.error').data('error');
     if (error !== '') {
         M.toast({html: error}, 2000);
@@ -32,7 +32,6 @@ function toggle_todo(e) {
             M.toast({html: msg}, 2000);  // Materialize 提示
         },
         complete: function () {
-            $('#todo-card' + id).load("http://127.0.0.1:8000/" + " .todo-body" + id);
         }
     })
 }
@@ -64,7 +63,7 @@ function edit_item(e) {
             M.toast({html: data.msg},2000);
         },
         complete: function () {
-            $('#todo-card' + id).load("http://127.0.0.1:8000/" + " .todo-body" + id);
+            $('#todo-card' + id).load("http://localhost:8000/" + " .todo-body" + id);
         }
     })
 }
@@ -80,7 +79,7 @@ function remove_edit_input() {
 };
 
 function del_todo(e) {
-    debugger;
+    // debugger;
     var url = $(e).data('href');
     var $item = $(e).parent().parent().parent();
     var id = $item.data('id');

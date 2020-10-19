@@ -27,7 +27,7 @@ class LoginView(View):  # 文档里说通用视图自动创建ModelForm,只要�
         user = authenticate(username=username, password=password)
 
         if user:
-            login(request, user)
+            login(request, user) # 登录
             return redirect("index")
         else:
             return render(request, self.template_name, {'error': "用户不存在"})
@@ -52,6 +52,11 @@ def register(request):
         u.save()
         return redirect("login")
     return render(request, 'account/register.html')
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
 
 
 class UserDetail(View):

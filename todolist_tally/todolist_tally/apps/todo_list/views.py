@@ -7,29 +7,46 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import time
-from todolist_tally.apps.todo_list.utils import format_time
-from todolist_tally.apps.account.utils import my_decorator
+from .utils import format_time
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from todolist_tally.apps.account.models import User
 
 
-@my_decorator
-def index(request, user_value=None):
-
+@login_required()
+def index(request):
+    user = request.user
+    value = request.GET.get('value')
+    todo_list = Todo.objects.filter(user=user)
     if request.method == 'POST':
-        print(request.user)
         content = request.POST.get('content')
         prepare_finish_time = request.POST.get('time')
-        one_todo = Todo(content=content,
-                        prepare_finish_time=prepare_finish_time)
-        one_todo.save()
+        if content and prepare_finish_time:
+            one_todo = Todo(user=user, content=content,
+                            prepare_finish_time=prepare_finish_time)
+            one_todo.save()
+    if value:
+            # 如果有value传进来，代表是过滤。
+            ll = User.objects.get(username="ll")
+            drq = User.objects.get(username="drq")
+            if value == "all":
+                todo_list = Todo.objects.filter(Q(user=drq) | Q(user=ll))
+            elif value == "ll":
+                todo_list = Todo.objects.filter(user=ll)
+            elif value == "drq":
+                todo_list = Todo.objects.filter(user=drq)
+            elif value == 'done':
+                todo_list = Todo.objects.filter(done=True)
+            elif value == 'not-done':
+                todo_list = Todo.objects.filter(done=False)
+    else:
+        context_dict = {'todo_list': todo_list, "user": user}
+        print("todo_list======", todo_list)
+        return render(request, 'todo_list/index.html', context_dict)
 
-    todo_list = Todo.objects.all()
-    if user_value == "drq":
-        print("进来了")
-        user = User.objects.get(username="drq")
-        todo_list = Todo.objects.filter(user=user)
-    context_dict = {'todo_list': todo_list}
-    return render(request, 'todo_list/index.html', context_dict)
+
+def index_filter(request):
+    pass
 
 
 @csrf_exempt
@@ -74,12 +91,3 @@ def del_todo(request):
         todo = Todo.objects.get(id=id)
         todo.delete()
         return JsonResponse(data={'msg': "删除成功"})
-
-
-def filter_user(request):
-    if request.method == "POST":
-        s = request.body.decode()
-        user_value = s[s.find("value="):]
-        user_value = user_value[user_value.find("=") + 1:]
-        index(request, user_value=user_value)
-        return JsonResponse(data={'msg': '修改成功'})

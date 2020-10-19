@@ -12,7 +12,7 @@
 <a class="btn" onclick="M.toast('I am a toast', 4000)">Toast!</a>
 <nav class=" black navbar navbar-default navbar-fixed-top">
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="{% url 'login' %}">更换账号</a></li>
+        <li><a href="{% url 'user_logout' %}">更换账号</a></li>
     </ul>
     <div class="container">
         <h3 style="margin-top: 10px">待办事项</h3>
@@ -41,9 +41,10 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-2">
+    <div class="row aaa">
+        <div class="col-md-6 col-md-offset-2 bbb">
             <div>
+                {% if user.username == "drq" or user.username == "ll" %}
                 <button onclick="filter_user('all')" class="chip">
                     所有
                 </button>
@@ -51,12 +52,18 @@
                     小怪兽
                 </button>
                 <button onclick="filter_user('drq')" class="chip">
-                    代睿权
+                    小袋鼠
+                </button>
+                {% endif %}
+                <button onclick="filter_user('done')" class="chip">
+                    已完成
                 </button>
             </div>
+            <div class="item-list">
             {% for todo in todo_list %}
             {% include 'todo_list/_item.html' %}
             {% endfor %}
+            </div>
         </div>
     </div>
 </div>
@@ -68,15 +75,16 @@
 <script type="text/javascript">
 
     
-    function filter_user(userValue) {
+    function filter_user(filter_value) {
         
-        const url = "http://127.0.0.1:8000/filter-user"
+        const url = "http://localhost:8000"
         $.ajax({
             url: url,
             type: 'POST',
-            data: { csrfmiddlewaretoken: '{{ csrf_token }}', value: userValue },
+            data: { 'csrfmiddlewaretoken':'{{ csrf_token }}', value: filter_value },
             success: function(data) {
-                console.log(data['msg']);
+                // $('.aaa').load("http://localhost:8000/" + " .bbb")
+                
             }
         });
     }

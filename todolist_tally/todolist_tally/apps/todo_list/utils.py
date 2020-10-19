@@ -7,5 +7,6 @@ def format_time(time):
         res += time
     return int(res)
 
+
 def finish_todo_on_time():
     pass
