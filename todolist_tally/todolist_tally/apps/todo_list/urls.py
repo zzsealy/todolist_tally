@@ -7,5 +7,5 @@ urlpatterns = [
     path('toggle-todo', views.toggle_todo, name='toggle_todo'),
     path('edit-todo', views.edit_todo, name='edit_todo'),
     path('del-todo', views.del_todo, name='del_todo'),
-    path('filter', views.index_filter, name="index_filter"),
+    path('index-filter/<str:username>/<str:value>', views.index_filter, name="index_filter"),
 ]

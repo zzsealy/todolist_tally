@@ -20,7 +20,7 @@
 </nav>
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-2">
+        <div class="col-md-6 col-md-offset-3">
             <div style="margin-top: 100px">
 
                 <form method="post">
@@ -29,7 +29,7 @@
                         <input type="text" name="content" placeholder="你需要完成什么事项" class="form-control">
                     </div>
                     <div id="sandbox-container">
-                        <input type="text" name="time" placeholder="预计完成时间">
+                        <input type="text" name="time" placeholder="预计完成时间 格式: yyyy-mm-dd">
                     </div>
                     <input class="btn btn-default" type="submit" value="添加">
                 </form>
@@ -41,55 +41,63 @@
 
 
 <div class="container">
-    <div class="row aaa">
-        <div class="col-md-6 col-md-offset-2 bbb">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
             <div>
                 {% if user.username == "drq" or user.username == "ll" %}
-                <button onclick="filter_user('all')" class="chip">
+                <a href="http://localhost:8000/index-filter/{{ user.username }}/all" class=" chip link">
                     所有
-                </button>
-                <button onclick="filter_user('ll')" class="chip">
+                </a>
+                <a href="http://localhost:8000/index-filter/{{ user.username }}/ll" class="chip link">
                     小怪兽
-                </button>
-                <button onclick="filter_user('drq')" class="chip">
+                </a>
+                <a href="http://localhost:8000/index-filter/{{ user.username }}/drq" class="chip link">
                     小袋鼠
-                </button>
+                </a>
                 {% endif %}
-                <button onclick="filter_user('done')" class="chip">
+                <a href="http://localhost:8000" class=" chip">
+                    所有
+                </a>
+                <a href="http://localhost:8000/index-filter/{{ user.username }}/done" class="chip">
                     已完成
-                </button>
+                </a>
+                <a href="http://localhost:8000/index-filter/{{ user.username }}/notdone" class="chip">
+                    未完成
+                </a>
             </div>
             <div class="item-list">
-            {% for todo in todo_list %}
-            {% include 'todo_list/_item.html' %}
-            {% endfor %}
+                {% for todo in todo_list %}
+                {% include 'todo_list/_item.html' %}
+                {% endfor %}
             </div>
+            <ul class="pagination">
+                <span class="step-links">
+                    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                    <!-- {% if todo_list.has_previous %}
+                        <a href="?page=1">首页</a>
+                        <a href="?page={{ todo_list.previous_page_number }}">上一页</a>
+                    {% endif %} -->
+                    {% for num in pages_list %}
+                        <li class="waves-effect" ><a href="?page={{ num }}">{{ num }}</a></li>
+                    {% endfor %}
+                    <!-- <span class="current">
+                        Page {{ todo_list.number }} of {{ todo_list.paginator.num_pages }}.
+                    </span> -->
+            
+                    <!-- {% if todo_list.has_next %}
+                        <a href="http://localhost:8000/?page={{ todo_list.next_page_number }}">下一页</a>
+                        <a href="?page={{ todo_list.paginator.num_pages }}">最后一页</a>
+                    {% endif %} -->
+                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+                </span>
+            </ul>
         </div>
     </div>
 </div>
 
+    {% endblock %}
 
-
-{% endblock %}
-{% block js %}
-<script type="text/javascript">
-
-    
-    function filter_user(filter_value) {
-        
-        const url = "http://localhost:8000"
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: { 'csrfmiddlewaretoken':'{{ csrf_token }}', value: filter_value },
-            success: function(data) {
-                // $('.aaa').load("http://localhost:8000/" + " .bbb")
-                
-            }
-        });
-    }
-</script>
-{% endblock %}
-</body>
+    </body>
 
 </html>

@@ -32,6 +32,7 @@ function toggle_todo(e) {
             M.toast({html: msg}, 2000);  // Materialize 提示
         },
         complete: function () {
+            $('#todo-card' + id).load("http://localhost:8000/" + " .todo-body" + id);
         }
     })
 }
