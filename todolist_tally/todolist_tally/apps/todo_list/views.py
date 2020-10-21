@@ -1,8 +1,6 @@
 from django.shortcuts import render
 # Create your views here.
 from todolist_tally.apps.todo_list.models import Todo
-# from django.views.generic import View
-# from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json

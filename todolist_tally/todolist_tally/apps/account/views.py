@@ -2,8 +2,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from todolist_tally.apps.account.models import User
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
 
 # 这个是django原生的
 from django.contrib.auth import authenticate, logout, login
@@ -27,7 +25,7 @@ class LoginView(View):  # 文档里说通用视图自动创建ModelForm,只要�
         user = authenticate(username=username, password=password)
 
         if user:
-            login(request, user) # 登录
+            login(request, user)  # 登录
             return redirect("index")
         else:
             return render(request, self.template_name, {'error': "用户不存在"})
@@ -46,7 +44,8 @@ def register(request):
         password2 = request.POST.get('password2')
         email = request.POST.get('email')
         if password1 != password2:
-            return render(request, 'account/register.html', {'error': "两次输入密码不一致"})
+            return render(request, 'account/register.html',
+                          {'error': "两次输入密码不一致"})
         u = User(username=username, email=email)
         u.set_password(password1)
         u.save()

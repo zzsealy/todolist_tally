@@ -4,8 +4,7 @@ backcall==0.2.0
 decorator==4.4.2
 Django==3.1.1
 django-cors-headers==3.5.0
-django-filter==2.4.0
-djangorestframework==3.12.1
+django-crontab==0.7.1
 flake8==3.8.3
 importlib-metadata==2.0.0
 ipython==7.16.1
@@ -13,6 +12,7 @@ ipython-genutils==0.2.0
 jedi==0.17.2
 Markdown==3.2.2
 mccabe==0.6.1
+mysqlclient==2.0.1
 parso==0.7.1
 pexpect==4.8.0
 pickleshare==0.7.5
@@ -28,4 +28,3 @@ traitlets==4.3.3
 wcwidth==0.2.5
 yapf==0.30.0
 zipp==3.2.0
-
