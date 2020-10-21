@@ -4,3 +4,4 @@
 *.pyc
 .vscode
 front-end/node_modules
+/todolist_tally/todolist_tally/local_setting.py

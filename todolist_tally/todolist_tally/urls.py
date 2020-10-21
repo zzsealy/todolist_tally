@@ -15,12 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework import routers
-from todolist_tally.apps.expense.views import UserViewSet, ExpenseViewSet
 
-router = routers.DefaultRouter()
-router.register('users', UserViewSet)
-router.register('expenses', ExpenseViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -28,6 +23,4 @@ urlpatterns = [
     path('', include('todolist_tally.apps.todo_list.urls')),
     path('account/', include('todolist_tally.apps.account.urls')),
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('api-expense/', include('rest_framework.urls', namespace='rest_framework')),
 ]

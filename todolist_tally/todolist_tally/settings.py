@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from todolist_tally.local_setting import *
 
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)),
@@ -43,30 +44,15 @@ INSTALLED_APPS = [
     'todolist_tally.apps.account',
     'todolist_tally.apps.todo_list',
     'todolist_tally.apps.expense',
-    'rest_framework',
+    'django_crontab',  # 定时任务
 ]
 
-PER_PAGE = 2
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.qq.com'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-EMAIL_USE_TLS = False
-EMAIL_HOST_USER = 'zzsealy@qq.com'
-EMAIL_HOST_PASSWORD = 'yqlntdohvnjggcbh'
-DEFAULT_FROM_EMAIL = 'zzsealy@qq.com'
+CRONJOBS = [
+    # 每1分钟生成一次首页静态文件
+    ('0 0 * * 0', 'todolist_tally.apps.account.utils.send_todo_email', '>> ' + os.path.join(os.path.dirname(BASE_DIR), 'logs/crontab.log'))
+]
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ],
-    'DEFAULT_PAGINATION_CLASS':
-    'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE':
-    10
-}
+PER_PAGE = 10
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -141,9 +127,9 @@ STATICFILES_DIRS = (location('static'), )
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
